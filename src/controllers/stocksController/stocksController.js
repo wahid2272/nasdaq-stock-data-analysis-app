@@ -8,9 +8,9 @@ const getStocks = (req, res) => {
     console.log(startDate, endDate, req.query);
 
     getStocksFromApi(startDate, endDate).then(stocks => {
-        res.status(200).send(sortByDateAsc(stocks, 'Date'))
+        res.status(200).send(sortByDateAsc(stocks, 'Date'));
     });
-}
+};
 
 const getHighestStreakByDays = (req, res) => {
     console.log('Get Stocks');
@@ -27,21 +27,21 @@ const getHighestStreakByDays = (req, res) => {
             
             if(price > lastMaxPrice){
                 currentStreak = 0;
-            }
+            };
 
             lastMaxPrice = price;
             currentStreak++;
 
             if(currentStreak > maxStreak) {
                 maxStreak = currentStreak - 1;
-            }
-        })
+            };
+        });
 
         res.status(200).send({
             maximumStreak: maxStreak
-        })
+        });
     });
-}
+};
 
 const getHighestVolumeAndPriceByDays = (req, res) =>{
     const {startDate, endDate} = req.query;
@@ -59,29 +59,17 @@ const getHighestVolumeAndPriceByDays = (req, res) =>{
         })).reduce((result, stock) => {
             if(Object.keys(result).length == 0 || result.priceDifference < stock.priceDifference) {
                 result = stock;
-            }
+            };
 
             return result;
         }, {});
 
-        /*_.forEach(stocks, function (stocks) {
-            const date = stocks['Date'];
-            const highPrice = parseFloat(stocks['High'].substring(1, stocks['High'].length));
-            const lowPrice = parseFloat(stocks['Low'].substring(1, stocks['Low'].length));
-            const priceChange = highPrice - lowPrice;
-
-            if(maxValue < priceChange){
-                maxValue = priceChange;
-                maxChangeDate = date;
-            }
-        })*/
-
         res.status(200).send({
             maxVolumeByDate: maxVolumeObject.Date,
             maxChangePriceByDate: maxDifferenceStock.Date,
-        })
-    })    
-}
+        });
+    });    
+};
 
 
 const calculateSmaPercentage = (req, res) => {
@@ -98,7 +86,7 @@ const calculateSmaPercentage = (req, res) => {
             stock.smaValue = getSmaValue(
                 originalStocks.slice(index-smaLength, index),
                 'Close/Last' 
-            )
+            );
 
             const diffInPerc = getDiffOfPriceAgainstSmaInPerc(stock.Open.slice(1), stock.smaValue);
             if(diffInPerc < 0) return false;
@@ -108,26 +96,11 @@ const calculateSmaPercentage = (req, res) => {
             return true;
         });
 
-        /*for(let i = 0; i< stocks.length; i++) {
-            let date = stocks[i]['Date'];
-            let claculteAmount = getSmaValue(stocks.slice(i+1, i+6));
-            let openingData = parseFloat(stocks[i]['Open'].substring(1, stocks[i]['Open'].length));
-
-            if(claculteAmount > 0) {
-                let percentage = ((openingData - claculteAmount) / claculteAmount) * 100;
-                if(percentage > 0) {
-                    let data = {'date': date, 'value': percentage}
-                    dataList.push(data);
-                }
-            }
-        }
-         const smaPercentage = _.sortBy(dataList, ['value']).reverse();*/
-
          res.status(200).send({
              smaPercentageList: _.orderBy(stocksWithSma, ['smaDiffWithOpeningPriceInPerc'], ['desc'])
          });
-    })
-}
+    });
+};
 
 
 module.exports = {

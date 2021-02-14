@@ -12,28 +12,21 @@ function getStocksFromApi(startDate, endDate) {
 };
 
 
-function getSmaValue(data, valueKey='Close/Last') {
-    //let total = 0;
-    
+function getSmaValue(data, valueKey='Close/Last') {    
     return data.reduce((result, item, index) => {
-        result = result + parseFloat(item[valueKey].slice(1))
+        result = result + parseFloat(item[valueKey].slice(1));
         
         if(index == data.length-1) {
-            result /= data.length
+            result /= data.length;
         }
 
-        return result
+        return result;
     }, 0);
+};
 
-    /*for (let i=0; i < fiveDaysData.length; i++){
-        total += parseFloat(fiveDaysData[i]['Close/Last'].substring(1, fiveDaysData[i]['Close/Last'].length));
-    };*/
-
-    //return (total/5);
-}
 
 function getDiffOfPriceAgainstSmaInPerc(price, smaValue) {
-    return ((price - smaValue) / smaValue) * 100
+    return ((price - smaValue) / smaValue) * 100;
 }
 
 

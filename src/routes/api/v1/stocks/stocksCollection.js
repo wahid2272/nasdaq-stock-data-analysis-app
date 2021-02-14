@@ -1,3 +1,7 @@
+const express = require('express');
+const router = express.Router();
+
+
 const {
     getStocks,
     getHighestStreakByDays,
@@ -5,8 +9,6 @@ const {
     calculateSmaPercentage,
 } = require('../../../../controllers/stocksController');
 
-const express = require('express');
-const router = express.Router();
 
 router.get('/', getStocks);
 router.get('/highestStreakByDays', getHighestStreakByDays);
