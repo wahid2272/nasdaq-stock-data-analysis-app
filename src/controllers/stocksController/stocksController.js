@@ -1,6 +1,6 @@
 const {sortByDateAsc} = require('../../helpers/utils');
 const {getStocksFromApi, getSmaValue, getDiffOfPriceAgainstSmaInPerc} = require('../../helpers/stocksHelper');
-const _ = require('lodash');
+const _ = require('lodash'); 
 
 const getStocks = (req, res) => {
     console.log('Get Stocks');

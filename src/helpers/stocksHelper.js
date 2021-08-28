@@ -8,7 +8,7 @@ function getStocksFromApi(startDate, endDate) {
                 .then(stocks => {
                     return csvToJson(stocks.data.toString());
                 })
-                .catch(err => res.status(400).send(err.stack));
+                .catch(err => console.log(err.stack));
 };
 
 
